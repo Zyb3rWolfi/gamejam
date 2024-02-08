@@ -369,6 +369,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 19887dee-c6fd-43cb-801c-a942576b7e84
     m_ActionName: Player One/Movement[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8e888f7d-095d-4faa-9cf0-598dbf0700be
+    m_ActionName: Player Two/Movement[/Keyboard/a]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player One
@@ -388,7 +392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 169514416}
   _rb: {fileID: 0}
-  _force: 400
+  _force: 600
 --- !u!50 &169514421
 Rigidbody2D:
   serializedVersion: 4
@@ -549,7 +553,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484660417}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7363315, y: -0.94194365, z: -0.07688389}
+  m_LocalPosition: {x: -0.47, y: -0.94194365, z: -0.07688389}
   m_LocalScale: {x: 0.25706533, y: 0.6012, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -570,6 +574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slider: {fileID: 484660417}
   _velocity: {x: 5, y: 0, z: 0}
+  _player: {fileID: 1258911117}
 --- !u!50 &484660420
 Rigidbody2D:
   serializedVersion: 4
@@ -921,7 +926,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1132474856}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7363315, y: -0.94194365, z: -0.07688389}
+  m_LocalPosition: {x: -1.48, y: -0.92, z: -0.07688389}
   m_LocalScale: {x: 0.25706533, y: 0.6012, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -989,6 +994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slider: {fileID: 1132474856}
   _velocity: {x: 5, y: 0, z: 0}
+  _player: {fileID: 169514416}
 --- !u!1 &1201367671
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,7 +1161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1258911117}
   _rb: {fileID: 0}
-  _force: 400
+  _force: 600
 --- !u!114 &1258911120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1197,9 +1203,25 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 19887dee-c6fd-43cb-801c-a942576b7e84
     m_ActionName: Player One/Movement[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1258911119}
+        m_TargetAssemblyTypeName: playerController, Assembly-CSharp
+        m_MethodName: player1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8e888f7d-095d-4faa-9cf0-598dbf0700be
+    m_ActionName: Player Two/Movement[/Keyboard/a]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player One
+  m_DefaultActionMap: Player Two
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!212 &1258911121

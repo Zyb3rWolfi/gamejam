@@ -28,6 +28,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Player Two",
+            "id": "fa403267-d3b3-41cf-b796-6cf7e2637543",
+            "actions": [
+                {
+                    "name": "Movement",
+                    "type": "Button",
+                    "id": "8e888f7d-095d-4faa-9cf0-598dbf0700be",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c5de4ed4-d285-44f7-b187-9782f3173ef2",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

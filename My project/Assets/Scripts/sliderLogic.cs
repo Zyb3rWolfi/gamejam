@@ -7,8 +7,9 @@ public class sliderLogic : MonoBehaviour
 {
     [SerializeField] private GameObject _slider;
     [SerializeField] private Vector3 _velocity;
+    [SerializeField] private GameObject _player;
     private bool _canPress = false;
-    public static event Action<bool> onCenter;
+    public static event Action<bool, GameObject> onCenter;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,10 +30,10 @@ public class sliderLogic : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        onCenter?.Invoke(true);
+        onCenter?.Invoke(true, _player);
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        onCenter?.Invoke(false);
+        onCenter?.Invoke(false, _player);
     }
 }

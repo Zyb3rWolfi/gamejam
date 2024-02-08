@@ -8,7 +8,7 @@ public class playerController : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private float _force;
     private bool _canPress = false;
-
+    private bool penaltyActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -17,10 +17,10 @@ public class playerController : MonoBehaviour
         _rb = _player.GetComponent<Rigidbody2D>();
     }
 
-    private void manageSlider(bool canPress) {
+    private void manageSlider(bool canPress, GameObject player) {
+            _canPress = canPress;
 
-        _canPress = canPress;
-        print(_canPress);
+        print(_player.tag);
 
     }
     private void OnEnable()
@@ -38,7 +38,22 @@ public class playerController : MonoBehaviour
     public void player1() {
         if (_canPress) {
             _rb.AddForce(new Vector3(_force, 0, 0));
+        } else {
+            if (!penaltyActive) {
+                StartCoroutine(penaltyTimeout());
+            }
         }
     }
 
+
+    private IEnumerator penaltyTimeout()
+    {
+        penaltyActive = true;
+        float amount;
+        amount = Random.Range(-200, -500);
+        _rb.AddForce(new Vector3(amount, 0, 0));
+        yield return new WaitForSeconds(1);
+        penaltyActive = false;
+
+    }
 }
