@@ -6,6 +6,7 @@ TagManager:
   tags:
   - center
   - Player2
+  - barrier
   layers:
   - Default
   - TransparentFX
