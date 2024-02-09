@@ -13,12 +13,14 @@ public class playerController : MonoBehaviour
     [SerializeField] private float _force;
     [SerializeField] private float delay;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private GameObject _debrisPrefab;
     private bool _canPress = false;
     private bool penaltyActive = false;
     private bool playerTimout = false;
     
     public static event Action<string, bool> perfectClick;
-
+    public static event Action<string, GameObject> targetDebris;
+    public static event Action<string> playerWon;
 
     // Start is called before the first frame update
     void Start()
@@ -64,12 +66,16 @@ public class playerController : MonoBehaviour
 
     private IEnumerator penaltyTimeout(float delay)
     {
+        text.text = "missed!";
+        text.gameObject.SetActive(true);
+        float rnd_x = Random.Range(9, 10);
+        float rnd_y = Random.Range(0, 3);
+        Instantiate(_debrisPrefab, new Vector3(rnd_x, rnd_y, 0), Quaternion.identity);
         penaltyActive = true;
         perfectClick?.Invoke(gameObject.tag, false);
-        float amount;
-        amount = Random.Range(-300, -800);
-        _rb.AddForce(new Vector3(amount, 0, 0));
+        targetDebris?.Invoke(gameObject.tag, _player);
         yield return new WaitForSeconds(delay);
+        text.gameObject.SetActive(false);
         penaltyActive = false;
 
     }
@@ -78,6 +84,7 @@ public class playerController : MonoBehaviour
             playerTimout = true;
             float amount;
             perfectClick?.Invoke(gameObject.tag, true);
+            text.text = "perfect";
             text.gameObject.SetActive(true);
             float rnd = Random.Range(500, 1000);
             _rb.AddForce(new Vector3(rnd, 0, 0));
@@ -86,4 +93,11 @@ public class playerController : MonoBehaviour
             playerTimout = false;
     
         }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {  
+       if (other.CompareTag("goal")) {
+            playerWon?.Invoke(_player.tag);
+       } 
+    }
 }

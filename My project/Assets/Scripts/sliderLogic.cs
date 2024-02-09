@@ -10,10 +10,17 @@ public class sliderLogic : MonoBehaviour
     [SerializeField] private GameObject _slider;
     [SerializeField] private Vector3 _velocity;
     [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _parentObject;
+
     private bool _canPress = false;
     public float _score = 1;
     public static event Action<bool, GameObject> onCenter;
-    // Start is called before the first frame update
+
+    public float shakeDuration = 0.5f; // Duration of the shake effect
+    public float shakeIntensity = 0.1f; // Intensity of the shake effect
+
+    private Vector3 originalPosition; // Original position of the object
+    private float currentShakeDuration = 0f; 
 
     private void OnEnable()
     {
@@ -25,10 +32,36 @@ public class sliderLogic : MonoBehaviour
         playerController.perfectClick -= OnPerfectHit;
     }
 
+    private void Start()
+    {
+        originalPosition = _parentObject.transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
         _slider.transform.Translate(_velocity * Time.deltaTime);
+
+        if (currentShakeDuration > 0)
+        {
+            // Generate a random offset within the intensity range
+            Vector2 randomOffset = Random.insideUnitCircle * shakeIntensity;
+
+            // Apply the offset to the object's position
+            _parentObject.gameObject.transform.position = originalPosition + new Vector3(randomOffset.x, randomOffset.y, 0);
+
+            // Reduce the remaining shake duration
+            currentShakeDuration -= Time.deltaTime;
+        }
+        else
+        {
+            // Reset the object's position to its original position
+            _parentObject.gameObject.transform.position = originalPosition;
+        }
+    }
+    public void Shake()
+    {
+        currentShakeDuration = shakeDuration; // Start the shake effect
     }
 
     private void OnPerfectHit(string tag, bool perfectHit)
@@ -39,35 +72,25 @@ public class sliderLogic : MonoBehaviour
             {
                 case true:
                 {
-                    if (_score < 0.8f)
-                    {
-                        _score = 1.0f;
-                        _velocity.x = 4.0f;
-                    }
 
-                    if (_score > 1.12 || _velocity.x > 14.3)
+                    if ( _velocity.x > 13 || _velocity.x < -13)
                     {
                         return;
                     }
-                    float rnd = Random.Range(0.02f, 0.08f);
-                    _score += rnd;
-                    _velocity *= _score;
+                    float rnd = Random.Range(1.0f, 1.2f);
+                    _velocity *= rnd;
                     break;
                 }
                 case false:
                 {
-                    if (_score < 0.6f)
-                    {
-                        break;
-                    }
+                    Shake();
 
-                    if (_velocity.x > 14)
+                    if (_velocity.x < 2 && _velocity.x > 0)
                     {
-                        _velocity.x = 4;
+                        return;
                     }
-                    float rnd = Random.Range(0.02f, 0.05f);
-                    _score -= rnd;
-                    _velocity *= _score;
+                    float rnd = Random.Range(0.7f, 0.9f);
+                    _velocity *= rnd;
                     break;
                 }
             }
@@ -76,7 +99,9 @@ public class sliderLogic : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {   
-
+        if (other.gameObject.CompareTag("goal")) {
+            return;
+        }
         _velocity.x = -_velocity.x;
     }
 
